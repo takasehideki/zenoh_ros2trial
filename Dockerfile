@@ -104,3 +104,8 @@ ENV RUSTUP_HOME /usr/local/rustup
 ENV CARGO_HOME /usr/local/cargo
 ENV PATH $PATH:/usr/local/cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+
+# Install ament-cmake-vendor-package to build rmw_zenoh
+RUN apt-get update -q && \
+  apt-get install -y ros-${ROS_DISTRO}-ament-cmake-vendor-package && \
+  rm -rf /var/lib/apt/lists/*
