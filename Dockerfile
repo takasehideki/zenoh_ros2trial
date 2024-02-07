@@ -91,7 +91,9 @@ RUN apt-get update -q && \
 
 RUN rosdep update
 
-COPY ./entrypoint.sh /
+# Download raw file directly from GitHub
+RUN wget https://raw.githubusercontent.com/Tiryoh/docker-ros2-desktop-vnc/master/rolling/entrypoint.sh && \
+  chmod 755 entrypoint.sh
 ENTRYPOINT [ "/bin/bash", "-c", "/entrypoint.sh" ]
 
 ENV USER ubuntu
