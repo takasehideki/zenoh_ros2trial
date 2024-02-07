@@ -109,6 +109,8 @@ Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com
 docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m takasehideki/zenoh_ros2trial
 ```
 
+After that, browse http://127.0.0.1:6080/.
+
 The Dockerfile is based on [Tiryoh/docker-ros2-desktop-vnc:rolling](https://github.com/Tiryoh/docker-ros2-desktop-vnc/blob/master/rolling/Dockerfile) which is released under the Apache-2.0 license.
 Thank you so much @Tiryoh for maintaining a wonderful Docker solution!
 
