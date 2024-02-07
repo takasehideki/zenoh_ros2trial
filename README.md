@@ -96,3 +96,35 @@ zenohd -e tcp/<host_ip>:7447
 docker exec -it zenoh_bridge /bin/bash
 zenohd
 ```
+
+## Demo 2: rmw_zenoh_cpp
+
+The second demonstration is to observe the development status of [rmw_zenoh_cpp](https://github.com/ros2/rmw_zenoh), that is a promising alternative RMW implementation based on [Zenoh](https://zenoh.io/).
+
+### Preliminary
+
+Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com/repository/docker/takasehideki/zenoh_ros2trial)
+
+```
+docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m takasehideki/zenoh_ros2trial
+```
+
+#### Build the image and use it locally
+
+Please enjoy the coffee break because building the image may take too long time :-
+
+```
+cd <git_cloned_dir>
+docker build -t zenoh_ros2trial .
+docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m zenoh_ros2trial
+```
+
+#### MEMO for ME: build and push the image to Docker Hub
+
+The following operation has been confirmed on my M1Mac.
+
+```
+docker buildx create --name mybuilder
+docker buildx use mybuilder
+docker buildx build --platform linux/amd64,linux/arm64 -t takasehideki/zenoh_ros2trial . --push
+```
