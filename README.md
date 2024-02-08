@@ -99,9 +99,9 @@ zenohd
 
 ## Demo 2: rmw_zenoh
 
-The second demonstration is to observe the development status of [rmw_zenoh](https://github.com/ros2/rmw_zenoh), that is a promising alternative RMW implementation based on [Zenoh](https://zenoh.io/).
+The second demonstration is to observe the development status of [rmw_zenoh](https://github.com/ros2/rmw_zenoh), which is a promising alternative RMW implementation based on [Zenoh](https://zenoh.io/).
 
-### Preliminary
+### Prepare Docker env
 
 Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com/repository/docker/takasehideki/zenoh_ros2trial).
 
@@ -135,6 +135,65 @@ docker buildx use mybuilder
 docker buildx build --platform linux/amd64,linux/arm64 -t takasehideki/zenoh_ros2trial . --push
 ```
 
+### Build package
+
+Every journey begins with `colcon build`.
+Please operate the below on the terminal in the VNC window.
+
+```
+cd ws_rmw_zenoh
+colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+```
+
 ### Operation
 
-Operate Zenoh nodes implemented in various languages.
+Let's control turtlesim with rmw_zenoh!
+All operations from here on are also required to be operated in the VNC window.
+
+- 1st terminal: startup Zenoh router for rmw_zenoh
+```
+source ~/ws_rmw_zenoh/local_setup.bash
+ros2 run rmw_zenoh_cpp init_rmw_zenoh_router
+```
+- 2nd terminal: start turtlesim with rmw_zenoh
+```
+source ~/ws_rmw_zenoh/local_setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ros2 run turtlesim turtlesim_node
+```
+- 3rd terminal: teleop to turtlesim
+```
+source ~/ws_rmw_zenoh/local_setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ros2 run turtlesim turtle_teleop_key
+```
+- 4th terminal: request clear to turtlesim
+```
+source ~/ws_rmw_zenoh/local_setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ros2 service call /clear std_srvs/srv/Empty
+```
+
+However, it is not stable to observe these behaviors as a ROS 2 node.
+
+- 5th terminal: observe with ros2cli
+```
+source ~/ws_rmw_zenoh/local_setup.bash
+export RMW_IMPLEMENTATION=rmw_zenoh_cpp
+ros2 node list
+ros2 topic list
+ros2 service list
+ros2 action list
+```
+
+And more,,, we cannot pub/sub and observe them with DDS nodes.
+
+- 6th terminal: try to subscribe from the DDS node
+```
+export RMW_IMPLEMENTATION=
+ros2 topic echo turtle1/pose
+```
+
+No! No!!
+I want to suggest that it is the limitation of the current development status.
+IOW, it's a contribution chance to [rmw_zenoh](https://github.com/ros2/rmw_zenoh) for you!!
