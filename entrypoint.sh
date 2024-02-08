@@ -1,3 +1,5 @@
+# This file is based on https://github.com/Tiryoh/docker-ros2-desktop-vnc/blob/master/rolling/entrypoint.sh
+# which is released under the Apache-2.0 license.
 #!/bin/bash
 
 # Create User

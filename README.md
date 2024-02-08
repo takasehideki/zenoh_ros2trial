@@ -111,7 +111,7 @@ docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m takasehi
 
 After that, browse http://127.0.0.1:6080/.
 
-The Dockerfile is based on [Tiryoh/docker-ros2-desktop-vnc:rolling](https://github.com/Tiryoh/docker-ros2-desktop-vnc/blob/master/rolling/Dockerfile) which is released under the Apache-2.0 license.
+`Dockerfile` and `entrypoint.sh` are based on [Tiryoh/docker-ros2-desktop-vnc:rolling](https://github.com/Tiryoh/docker-ros2-desktop-vnc/blob/master/rolling/), released under the Apache-2.0 license.
 Thank you so much @Tiryoh for maintaining a wonderful Docker solution!
 
 #### Build the image and use it locally
