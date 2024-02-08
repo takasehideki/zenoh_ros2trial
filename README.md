@@ -210,11 +210,13 @@ Why did you think that nodes with different `ROS_DOMAIN_ID`s would not connect?
 
 - 1st terminal: publisher in ID=2
 ```
+export RMW_IMPLEMENTATION=
 export ROS_DOMAIN_ID=2
 ros2 run demo_nodes_cpp talker
 ```
 - 2nd terminal: subscriber in ID=4
 ```
+export RMW_IMPLEMENTATION=
 export ROS_DOMAIN_ID=4
 ros2 run demo_nodes_cpp listener
 ```
@@ -224,11 +226,13 @@ So what if we try the magic of Zenoh?
 
 - 3rd terminal: startup zenoh-bridge-ros2-dds in ID=2
 ```
+export RMW_IMPLEMENTATION=
 export ROS_DOMAIN_ID=2
 zenohd-bridge-ros2-dds
 ```
 - 4th terminal: startup zenohd in ID=4
 ```
+export RMW_IMPLEMENTATION=
 export ROS_DOMAIN_ID=4
 zenohd-bridge-ros2-dds
 ```
