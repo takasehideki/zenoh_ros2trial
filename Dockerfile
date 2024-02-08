@@ -101,8 +101,8 @@ ENV PASSWD ubuntu
 ENV RUSTUP_HOME /usr/local/rustup
 ENV CARGO_HOME /usr/local/cargo
 ENV PATH $PATH:/usr/local/cargo/bin
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
-RUN chmod 777 ${CARGO_HOME}
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path && \
+  chmod 777 ${CARGO_HOME}
 
 # Clone and build rmw_zenoh
 RUN mkdir /ws_rmw_zenoh/src -p && cd /ws_rmw_zenoh/src && \
@@ -110,6 +110,8 @@ RUN mkdir /ws_rmw_zenoh/src -p && cd /ws_rmw_zenoh/src && \
   cd .. && \
   apt-get update -q && \
   rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y && \
+  apt-get autoclean && \
+  apt-get autoremove && \
   rm -rf /var/lib/apt/lists/* && \
   source /opt/ros/${ROS_DISTRO}/setup.bash && \
   colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release

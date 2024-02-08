@@ -80,7 +80,7 @@ docker exec -it zenoh_bridge /bin/bash
 python3 zenoh_dds/pub.py
 ```
 
-And one more thing, if you have already installed `zenohd` on the host, try subscribing to them!!
+[Bonus!] And one more thing, if you have already installed `zenohd` on the host, try subscribing to them!!
 
 - 9th terminal: Zenoh subscriber on the **host**
 ```
@@ -97,13 +97,14 @@ docker exec -it zenoh_bridge /bin/bash
 zenohd
 ```
 
-## Demo 2: rmw_zenoh_cpp
+## Demo 2: rmw_zenoh
 
-The second demonstration is to observe the development status of [rmw_zenoh_cpp](https://github.com/ros2/rmw_zenoh), that is a promising alternative RMW implementation based on [Zenoh](https://zenoh.io/).
+The second demonstration is to observe the development status of [rmw_zenoh](https://github.com/ros2/rmw_zenoh), that is a promising alternative RMW implementation based on [Zenoh](https://zenoh.io/).
 
 ### Preliminary
 
-Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com/repository/docker/takasehideki/zenoh_ros2trial)
+Pre-built Docker image has been published on [Docker Hub](https://hub.docker.com/repository/docker/takasehideki/zenoh_ros2trial).
+
 
 ```
 docker run -p 6080:80 --security-opt seccomp=unconfined --shm-size=512m takasehideki/zenoh_ros2trial
@@ -133,3 +134,7 @@ docker buildx create --name mybuilder
 docker buildx use mybuilder
 docker buildx build --platform linux/amd64,linux/arm64 -t takasehideki/zenoh_ros2trial . --push
 ```
+
+### Operation
+
+Operate Zenoh nodes implemented in various languages.
