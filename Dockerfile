@@ -113,3 +113,21 @@ RUN mkdir /ws_rmw_zenoh/src -p && cd /ws_rmw_zenoh/src && \
   apt-get autoclean && \
   apt-get autoremove && \
   rm -rf /var/lib/apt/lists/*
+
+# Download and locate zenohd
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	curl -fSL -o /tmp/zenoh.zip "https://github.com/eclipse-zenoh/zenoh/releases/download/0.10.1-rc/zenoh-0.10.1-rc-aarch64-unknown-linux-gnu.zip" ; \
+	elif [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	curl -fSL -o /tmp/zenoh.zip "https://github.com/eclipse-zenoh/zenoh/releases/download/0.10.1-rc/zenoh-0.10.1-rc-x86_64-unknown-linux-gnu.zip" ; \
+	fi && \
+	unzip /tmp/zenoh.zip -d /usr/local/bin && \
+	rm -rf /tmp/zenoh.zip
+
+# Download and locate zenoh-bridge-ros2dds
+RUN if [ ${TARGETPLATFORM} = "linux/arm64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-ros2dds.zip "https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases/download/0.10.1-rc.2/zenoh-bridge-ros2dds-0.10.1-rc.2-aarch64-unknown-linux-gnu.zip"; \
+	elif [ ${TARGETPLATFORM} = "linux/amd64" ]; then \
+	curl -fSL -o /tmp/zenoh-bridge-ros2dds.zip "https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/releases/download/0.10.1-rc.2/zenoh-bridge-ros2dds-0.10.1.rc.2-rc-x86_64-unknown-linux-gnu.zip" ; \
+	fi && \
+	unzip /tmp/zenoh-bridge-ros2dds.zip -d /usr/local/bin && \
+	rm -rf /tmp/zenoh-bridge-ros2dds.zip
