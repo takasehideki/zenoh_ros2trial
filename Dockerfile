@@ -112,6 +112,4 @@ RUN mkdir /ws_rmw_zenoh/src -p && cd /ws_rmw_zenoh/src && \
   rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y && \
   apt-get autoclean && \
   apt-get autoremove && \
-  rm -rf /var/lib/apt/lists/* && \
-  source /opt/ros/${ROS_DISTRO}/setup.bash && \
-  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
+  rm -rf /var/lib/apt/lists/*
