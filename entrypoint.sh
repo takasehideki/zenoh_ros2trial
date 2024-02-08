@@ -349,4 +349,7 @@ echo "NOTE: --security-opt seccomp=unconfined flag is required to launch Ubuntu 
 echo -e 'See \e]8;;https://github.com/Tiryoh/docker-ros2-desktop-vnc/pull/56\e\\https://github.com/Tiryoh/docker-ros2-desktop-vnc/pull/56\e]8;;\e\\'
 echo "============================================================================================"
 
+mv /ws_rmw_zenoh $HOME
+chown -R $USER.$USER $HOME/ws_rmw_zenoh 
+
 exec /bin/tini -- supervisord -n -c /etc/supervisor/supervisord.conf

@@ -104,7 +104,12 @@ ENV PATH $PATH:/usr/local/cargo/bin
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
 RUN chmod 777 ${CARGO_HOME}
 
-# Install ament-cmake-vendor-package to build rmw_zenoh
-RUN apt-get update -q && \
-  apt-get install -y ros-${ROS_DISTRO}-ament-cmake-vendor-package && \
-  rm -rf /var/lib/apt/lists/*
+# Clone and build rmw_zenoh
+RUN mkdir /ws_rmw_zenoh/src -p && cd /ws_rmw_zenoh/src && \
+  git clone https://github.com/ros2/rmw_zenoh.git && \
+  cd .. && \
+  apt-get update -q && \
+  rosdep install --from-paths src --ignore-src --rosdistro ${ROS_DISTRO} -y && \
+  rm -rf /var/lib/apt/lists/* && \
+  source /opt/ros/${ROS_DISTRO}/setup.bash && \
+  colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release
