@@ -197,3 +197,38 @@ ros2 topic echo turtle1/pose
 No! No!!
 I want to suggest that it is the limitation of the current development status.
 IOW, it's a contribution chance to [rmw_zenoh](https://github.com/ros2/rmw_zenoh) for you!!
+
+## Demo 3: zenoh_ros2dds
+
+If you are familiar with the latest trend of ROS 2, you may wonder how to treat [zenoh_plugin_ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/) with ROS 2 ecosystem.
+
+The third demonstration can recognize the difference between rmw_zenoh and [zenoh_plugin_ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds/).
+
+### Operation
+
+Why did you think that nodes with different `ROS_DOMAIN_ID`s would not connect?
+
+- 1st terminal: publisher in ID=2
+```
+export ROS_DOMAIN_ID=2
+ros2 run demo_nodes_cpp talker
+```
+- 2nd terminal: subscriber in ID=4
+```
+export ROS_DOMAIN_ID=4
+ros2 run demo_nodes_cpp listener
+```
+
+Of course, these nodes cannot chat with each other.
+So what if we try the magic of Zenoh?
+
+- 3rd terminal: startup zenoh-bridge-ros2-dds in ID=2
+```
+export ROS_DOMAIN_ID=2
+zenohd-bridge-ros2-dds
+```
+- 4th terminal: startup zenohd in ID=4
+```
+export ROS_DOMAIN_ID=4
+zenohd-bridge-ros2-dds
+```
