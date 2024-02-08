@@ -236,3 +236,46 @@ export RMW_IMPLEMENTATION=
 export ROS_DOMAIN_ID=4
 zenohd-bridge-ros2-dds
 ```
+
+## Demo 4: connect to the cloud
+
+One more thing,,,
+Let's connect to the cloud with zenoh-ros2dds!
+
+The final demonstration is the time to say "what an amazing that!"
+
+### Preliminary
+
+Please prepare the cloud environment as the example for Azure VM.
+
+- Deploy the Ubuntu 22.04 LTS instance as [the follow](https://qiita.com/t_ymgt/items/0c473f73cfe4794a8036) except to http and https accesses.
+- Add the connection rules 7447 port for both send/receive.
+- Install [ROS 2 Rolling](https://docs.ros.org/en/rolling/Installation/Ubuntu-Install-Debians.html) and [zenoh-plugin-ros2dds](https://github.com/eclipse-zenoh/zenoh-plugin-ros2dds?tab=readme-ov-file#linux-debian) in the instance
+- Prepare RDP env as [the follow](https://learn.microsoft.com/ja-jp/azure/virtual-machines/linux/use-remote-desktop?tabs=azure-cli)
+
+### Operation
+
+On the cloud side, start zenoh-bridge-ros2dds and turtlesim. 
+
+- 1st terminal: zenoh-bridge-ros2dds
+```
+zenoh-bridge-ros2dds -l tcp/0.0.0.0:7447
+```
+- 2nd terminal: turtlesim
+```
+ros2 run turtlesim turtlesim_node
+```
+
+On the local side (VNC window), start teleop to turtlesim along with zenoh-bridge-ros2dds.
+
+- 3rd terminal: zenoh-bridge-ros2dds
+```
+zenoh-bridge-ros2dds -e tcp/<cloud_ip>:7447
+```
+- 4th terminal: turtle_teleop
+```
+ros2 run turtlesim turtle_teleop_key
+```
+
+What happens??
+No problem,,, I cannot understand that :D
